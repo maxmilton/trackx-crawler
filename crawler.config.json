@@ -1,0 +1,7 @@
+{
+  "ROOT_DIR": ".",
+  "DB_PATH": "crawler.db",
+  "DB_SQL_PATH": "schema.sql",
+  "__API_ENDPOINT": "http://127.0.0.1:8888/v1/pt1ttp4y66n",
+  "API_ENDPOINT": "http://127.0.0.1:5001/api/v1/8gbbjxs89sg"
+}

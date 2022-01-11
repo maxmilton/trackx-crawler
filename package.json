@@ -1,0 +1,66 @@
+{
+  "name": "trackx-crawler",
+  "version": "0.0.0",
+  "description": "WIP",
+  "repository": "maxmilton/trackx-crawler",
+  "homepage": "https://github.com/maxmilton/trackx-crawler",
+  "author": "Max Milton <max@happycode.ltd>",
+  "license": "MIT",
+  "private": true,
+  "bin": {
+    "txc": "dist/index.js"
+  },
+  "scripts": {
+    "build": "pnpm run prebuild && NODE_ENV=production node build.mjs",
+    "dev": "NODE_ENV=development node build.mjs",
+    "lint": "pnpm run lint:js && pnpm run lint:ts",
+    "lint:js": "eslint --ignore-path .gitignore --ext .cjs,.js,.mjs,.ts .",
+    "lint:ts": "tsc --project test --noEmit",
+    "prebuild": "rm -rf dist",
+    "start": "pnpm txc check && pnpm txc run -- --parallel 5 --max 10000 --depth 3",
+    "test": "c8 --all --include=src --reporter=text --reporter=lcovonly uvu -r tsm test '\\.test\\.ts$'",
+    "txc": "node -r source-map-support/register dist/index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "7.4.6",
+    "kleur": "4.1.4",
+    "playwright-firefox": "1.17.2",
+    "sade": "1.8.1",
+    "trackx": "0.3.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.4.2",
+    "@types/chrome": "0.0.176",
+    "@types/node": "17.0.8",
+    "@typescript-eslint/eslint-plugin": "5.9.1",
+    "@typescript-eslint/parser": "5.9.1",
+    "c8": "7.11.0",
+    "esbuild": "0.14.11",
+    "esbuild-minify-templates": "0.7.2",
+    "eslint": "8.6.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-airbnb-typescript": "16.1.0",
+    "eslint-plugin-import": "2.25.4",
+    "eslint-plugin-unicorn": "40.0.0",
+    "git-ref": "0.3.1",
+    "prettier": "2.5.1",
+    "prettier-plugin-pkg": "0.11.1",
+    "prettier-plugin-sh": "0.8.1",
+    "prettier-plugin-sql": "0.4.1",
+    "source-map-support": "0.5.21",
+    "tsm": "2.2.1",
+    "typescript": "4.5.4",
+    "uvu": "0.5.3"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "endOfLine": "lf",
+    "singleQuote": true,
+    "trailingComma": "all",
+    "plugins": [
+      "./node_modules/prettier-plugin-pkg",
+      "./node_modules/prettier-plugin-sh",
+      "./node_modules/prettier-plugin-sql"
+    ]
+  }
+}
