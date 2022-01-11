@@ -91,28 +91,28 @@ async function followLink(
 
   const validIndexes = await links.evaluateAll(
     // eslint-disable-next-line unicorn/no-array-reduce
-    (list, _seen) =>
-      list.reduce((acc, item, index) => {
-        const href = item.getAttribute('href');
+    (list, _seen) => list.reduce((acc, item, index) => {
+      const href = item.getAttribute('href');
 
-        if (href) {
-          const linkURL = new URL(href, window.location.href);
+      if (href) {
+        const linkURL = new URL(href, window.location.href);
 
-          if (
-            linkURL.origin === window.location.origin &&
-            !linkURL.hash &&
-            href !== '#' &&
-            !_seen.includes(linkURL.origin + linkURL.pathname) &&
-            (linkURL.protocol === 'https:' || linkURL.protocol === 'http:') &&
-            item.target !== '_blank' &&
-            item.getAttribute('role') !== 'button'
-          ) {
-            acc.push(index);
-          }
+        if (
+          linkURL.origin === window.location.origin
+            && !linkURL.hash
+            && href !== '#'
+            && !_seen.includes(linkURL.origin + linkURL.pathname)
+            && (linkURL.protocol === 'https:' || linkURL.protocol === 'http:')
+            // @ts-expect-error - FIXME:!
+            && item.target !== '_blank'
+            && item.getAttribute('role') !== 'button'
+        ) {
+          acc.push(index);
         }
+      }
 
-        return acc;
-      }, [] as number[]),
+      return acc;
+    }, [] as number[]),
     seen,
   );
 
@@ -329,9 +329,9 @@ export default async function action(opts: RunOptions): Promise<void> {
       );
     } catch (error) {
       if (
-        error instanceof Error &&
-        (error.message.startsWith('HTTP ') ||
-          error.message === 'Too many redirects')
+        error instanceof Error
+        && (error.message.startsWith('HTTP ')
+          || error.message === 'Too many redirects')
       ) {
         logger.warn(error.message, error.details);
       } else {
@@ -395,9 +395,9 @@ export default async function action(opts: RunOptions): Promise<void> {
         const seen: string[] = [];
 
         while (
-          --remainingDepth &&
+          --remainingDepth
           // eslint-disable-next-line no-await-in-loop
-          (await followLink(page, seen, incrementPageCount))
+          && (await followLink(page, seen, incrementPageCount))
         );
       } catch (error) {
         if (remainingDepth === opts.depth - 1) {

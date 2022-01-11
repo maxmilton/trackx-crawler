@@ -23,9 +23,8 @@ const analyzeMeta = {
     if (!build.initialOptions.metafile) return;
 
     build.onEnd(
-      (result) =>
-        result.metafile &&
-        build.esbuild.analyzeMetafile(result.metafile).then(console.log),
+      (result) => result.metafile
+        && build.esbuild.analyzeMetafile(result.metafile).then(console.log),
     );
   },
 };
