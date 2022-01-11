@@ -6,7 +6,7 @@
 
 WIP.
 
-Crawl website and capture errors and browser reports they produce.
+Crawl websites to capture the errors and browser reports they produce.
 
 When using the default API endpoint, you can view the results at <https://dash.trackx.app/projects/trackx-crawler> or <https://demo.trackx.app/projects/trackx-crawler>.
 
