@@ -56,21 +56,24 @@ export function getConfig(
 export function modifyCSPHeader(header: string, config: CrawlerConfig): string {
   let newHeader = header;
 
-  const connectSrcIndex = newHeader.indexOf('connect-src');
   const defaultSrcIndex = newHeader.indexOf('default-src');
 
-  if (connectSrcIndex !== -1) {
-    // Add to existing connect-src directive
-    const nextSemiIndex = newHeader.indexOf(';', connectSrcIndex);
+  if (defaultSrcIndex !== -1) {
+    // Add to existing default-src directive
+    const nextSemiIndex = newHeader.indexOf(';', defaultSrcIndex);
     newHeader = `${newHeader.slice(
       0,
       nextSemiIndex !== -1 ? nextSemiIndex : undefined,
     )} ${new URL(config.API_ENDPOINT).origin}${
       nextSemiIndex !== -1 ? newHeader.slice(nextSemiIndex) : ''
     }`;
-  } else if (defaultSrcIndex !== -1) {
-    // Add to existing default-src directive
-    const nextSemiIndex = newHeader.indexOf(';', defaultSrcIndex);
+  }
+
+  const connectSrcIndex = newHeader.indexOf('connect-src');
+
+  if (connectSrcIndex !== -1) {
+    // Add to existing connect-src directive
+    const nextSemiIndex = newHeader.indexOf(';', connectSrcIndex);
     newHeader = `${newHeader.slice(
       0,
       nextSemiIndex !== -1 ? nextSemiIndex : undefined,
@@ -91,8 +94,6 @@ export function modifyCSPHeader(header: string, config: CrawlerConfig): string {
       config.API_ENDPOINT
     }/report${nextSemiIndex !== -1 ? newHeader.slice(nextSemiIndex) : ''}`;
   }
-
-  // TODO: Add/modify "report-to" directive if we use Chromium (unsupported in Firefox)
 
   return newHeader;
 }
@@ -116,12 +117,12 @@ export function modifyReportToHeader(
   config: CrawlerConfig,
 ): string {
   return [
-    header,
     JSON.stringify({
       max_age: 1800,
       endpoints: [{ url: `${config.API_ENDPOINT}/report` }],
       group: 'default',
     }),
+    header,
   ].join(',');
 }
 

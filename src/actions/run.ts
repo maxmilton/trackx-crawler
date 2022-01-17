@@ -42,17 +42,19 @@ function routeHandler(page: Page, config: CrawlerConfig, opts: RunOptions) {
       });
       const headers = response.headers();
 
-      if (headers['content-security-policy']) {
-        headers['content-security-policy'] = modifyCSPHeader(
-          headers['content-security-policy'],
-          config,
-        );
-      }
-      if (headers['content-security-policy-report-only']) {
-        headers['content-security-policy-report-only'] = modifyCSPHeader(
-          headers['content-security-policy-report-only'],
-          config,
-        );
+      if (!opts['bypass-csp']) {
+        if (headers['content-security-policy']) {
+          headers['content-security-policy'] = modifyCSPHeader(
+            headers['content-security-policy'],
+            config,
+          );
+        }
+        if (headers['content-security-policy-report-only']) {
+          headers['content-security-policy-report-only'] = modifyCSPHeader(
+            headers['content-security-policy-report-only'],
+            config,
+          );
+        }
       }
 
       headers['expect-ct'] = addExpectCTHeader(config);
