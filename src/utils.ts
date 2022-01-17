@@ -33,17 +33,22 @@ export function getConfig(
   // eslint-disable-next-line max-len
   // eslint-disable-next-line @typescript-eslint/no-var-requires, import/no-dynamic-require, global-require
   const rawConfig = require(CONFIG_PATH) as CrawlerConfig;
+  // Override config values with env vars
+  for (const key of Object.keys(rawConfig)) {
+    if (typeof process.env[key] !== 'undefined') {
+      // @ts-expect-error - unavoidable string indexing
+      rawConfig[key] = process.env[key];
+    }
+  }
   const rootDir = path.resolve(process.cwd(), rawConfig.ROOT_DIR || '.');
+
+  deferred.endpoint = rawConfig.API_ENDPOINT;
 
   return {
     ...rawConfig,
     CONFIG_PATH,
-    DB_PATH: path.resolve(rootDir, process.env.DB_PATH || rawConfig.DB_PATH),
-    DB_SQL_PATH: path.resolve(
-      rootDir,
-      process.env.DB_SQL_PATH || rawConfig.DB_SQL_PATH,
-    ),
-    API_ENDPOINT: process.env.API_ENDPOINT || rawConfig.API_ENDPOINT,
+    DB_PATH: path.resolve(rootDir, rawConfig.DB_PATH),
+    DB_SQL_PATH: path.resolve(rootDir, rawConfig.DB_SQL_PATH),
   };
 }
 
