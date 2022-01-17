@@ -6,6 +6,18 @@ import {
 import path from 'path';
 import type { CrawlerConfig } from './types';
 
+export const deferred = {
+  $endpoint:
+    process.env.API_ENDPOINT || 'https://api.trackx.app/v1/pt1ttp4y66n',
+
+  get endpoint(): string {
+    return this.$endpoint;
+  },
+  set endpoint(value: string) {
+    this.$endpoint = value;
+  },
+};
+
 export const logger = {
   /* eslint-disable no-console */
   error(this: void, ...args: unknown[]): void {

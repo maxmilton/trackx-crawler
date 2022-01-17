@@ -3,8 +3,9 @@ import * as trackx from 'trackx/node';
 import check from './actions/check';
 import importSites from './actions/import-sites';
 import run from './actions/run';
+import { deferred } from './utils';
 
-trackx.setup('https://api.trackx.app/v1/pt1ttp4y66n', (data, reason) => {
+trackx.setup(deferred.endpoint, (data, reason) => {
   if (reason instanceof Error) {
     // eslint-disable-next-line no-param-reassign
     data.meta.details ??= reason.details;
