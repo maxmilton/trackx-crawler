@@ -3,5 +3,6 @@
 *.log
 *.zip
 /coverage/
+/crawler.db*
 dist
 node_modules
