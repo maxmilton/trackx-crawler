@@ -91,17 +91,10 @@ await esbuild.build({
     'process.env.TRACKX_CODE': JSON.stringify(
       decodeUTF8(out.outputFiles[0].contents),
     ),
-    //       'process.env.TRACKX_CODE':
-    //         JSON.stringify(`const script = document.createElement('script');
-    // script.crossOrigin = '';
-    // script.textContent = ${JSON.stringify(out.outputFiles?.[0].text)};
-    // // eslint-disable-next-line unicorn/prefer-dom-node-append
-    // (document.head||document.documentElement).appendChild(script);
-    // script.remove();`),
   },
   external: [
     'better-sqlite3',
-    'playwright-firefox',
+    'playwright',
     'source-map',
     'source-map-support',
   ],

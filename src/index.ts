@@ -53,6 +53,11 @@ prog
   .command('run')
   .describe('Run a new site crawl.')
   .option(
+    '--browser',
+    "Browser to use for crawling, can be 'chromium', 'firefox', or 'webkit'",
+    'firefox',
+  )
+  .option(
     '-d, --depth',
     'Try follow a same-origin link picked at random, a number of times',
     0,
@@ -81,6 +86,8 @@ prog
     "Website selection order, can be 'asc' or 'random'",
     'asc',
   )
+  .option('--bypass-csp', 'Bypass content security policy checks')
+  .option('--proxy', 'Use a network proxy server')
   .option('--debug', 'Enable debug logging and use a headfull browser')
   .example('run --max 1000')
   .example('run -p 5 -m 10000 -d 3')

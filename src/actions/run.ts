@@ -1,7 +1,14 @@
 /* eslint-disable no-plusplus */
 
 import colors from 'kleur';
-import { firefox, type Page, type Route } from 'playwright-firefox';
+import {
+  chromium,
+  firefox,
+  LaunchOptions,
+  webkit,
+  type Page,
+  type Route,
+} from 'playwright';
 import { connectDB } from '../db';
 import type { CrawlerConfig, GlobalOptions } from '../types';
 import {
@@ -20,6 +27,12 @@ import {
 // errors and browser reports.
 // eslint-disable-next-line unicorn/prefer-set-has
 const RESOURCE_EXCLUSTIONS = ['image', 'stylesheet', 'media', 'font', 'other'];
+
+const browsers = {
+  chromium,
+  firefox,
+  webkit,
+};
 
 function routeHandler(page: Page, config: CrawlerConfig, opts: RunOptions) {
   return async (route: Route) => {
@@ -154,14 +167,17 @@ interface Site {
 }
 
 interface RunOptions extends GlobalOptions {
+  readonly browser: 'chromium' | 'firefox' | 'webkit';
   readonly block: boolean;
   readonly debug: boolean | undefined;
   readonly depth: number;
   readonly max: number;
   readonly order: string;
   readonly parallel: number;
+  readonly proxy: string;
   readonly restart: boolean;
   readonly timeout: number;
+  readonly 'bypass-csp': boolean;
 }
 
 export default async function action(opts: RunOptions): Promise<void> {
@@ -174,6 +190,14 @@ export default async function action(opts: RunOptions): Promise<void> {
     } else if (opts.debug) {
       process.env.CRAWLER_DEBUG = '1';
     }
+  }
+  if (
+    opts.browser !== 'chromium'
+    && opts.browser !== 'firefox'
+    && opts.browser !== 'webkit'
+  ) {
+    logger.error('Browser must be one of chromium, firefox, or webkit');
+    shouldExit = true;
   }
   if (!Number.isInteger(opts.depth) || opts.depth < 0) {
     logger.error('Depth must be a number greater than or equal to 0');
@@ -191,12 +215,25 @@ export default async function action(opts: RunOptions): Promise<void> {
     logger.error('Parallel must be a number greater than 0');
     shouldExit = true;
   }
+  if (opts.proxy !== undefined && typeof opts.proxy !== 'string') {
+    logger.error(
+      'Proxy must be a string e.g., "myproxy.com:3128", "http://myproxy.com:3128", "socks5://myproxy.com:3128"',
+    );
+    shouldExit = true;
+  }
   if (opts.block !== undefined && typeof opts.block !== 'boolean') {
     logger.error('Block must be a boolean');
     shouldExit = true;
   }
   if (opts.restart !== undefined && typeof opts.restart !== 'boolean') {
     logger.error('Restart must be a boolean');
+    shouldExit = true;
+  }
+  if (
+    opts['bypass-csp'] !== undefined
+    && typeof opts['bypass-csp'] !== 'boolean'
+  ) {
+    logger.error('Bypass CSP must be a boolean');
     shouldExit = true;
   }
   if (opts.order !== 'asc' && opts.order !== 'random') {
@@ -283,17 +320,25 @@ export default async function action(opts: RunOptions): Promise<void> {
     );
   }
 
-  const clientCode = process.env.TRACKX_CODE!.replace(
+  const clientCode = process.env.TRACKX_CODE!.replaceAll(
     '%API_ENDPOINT%',
     config.API_ENDPOINT,
   );
 
-  // const browser = await chromium.launch({
-  const browser = await firefox.launch({
+  const launchOpts: LaunchOptions = {
     headless: !opts.debug,
-    // devtools: Boolean(opts.debug), // Chrome only
+  };
 
-    firefoxUserPrefs: {
+  if (opts.proxy) {
+    launchOpts.proxy = { server: opts.proxy };
+  }
+
+  if (opts.browser === 'chromium') {
+    launchOpts.devtools = Boolean(opts.debug);
+  }
+
+  if (opts.browser === 'firefox') {
+    launchOpts.firefoxUserPrefs = {
       // block audio and video autoplay
       'media.autoplay.block-event.enabled': true,
       'media.autoplay.block-webaudio': true,
@@ -304,10 +349,16 @@ export default async function action(opts: RunOptions): Promise<void> {
       // enable Report-To header support
       // https://developer.mozilla.org/en-US/docs/Web/API/Reporting_API#browser_compatibility
       'dom.reporting.header.enabled': true,
-    },
-  });
+    };
+  }
+
+  if (opts.browser === 'webkit') {
+    // launchOpts.args = ['--disable-web-security'];
+  }
+
+  const browser = await browsers[opts.browser].launch(launchOpts);
   const context = await browser.newContext({
-    // bypassCSP: true,
+    bypassCSP: opts['bypass-csp'],
     reducedMotion: 'reduce',
     // Set location to Tokyo, Japan
     geolocation: {
@@ -350,7 +401,7 @@ export default async function action(opts: RunOptions): Promise<void> {
     const page = await context.newPage();
 
     page.on('crash', (crashedPage) => {
-      throw new Error(`Page crashed: ${crashedPage.url()}`);
+      throw new Error(`Page Crashed: ${crashedPage.url()}`);
     });
     if (opts.verbose || opts.debug) {
       page.on('pageerror', (err) => {
@@ -369,11 +420,22 @@ export default async function action(opts: RunOptions): Promise<void> {
       });
     }
 
+    await page.addInitScript(
+      clientCode
+        .replace('%WEBSITE%', site.url)
+        .replace('%URL%', String(resolved)),
+    );
+    // await page.addInitScript((code: string) => {
+    //   const script = document.createElement('script');
+    //   script.crossOrigin = '';
+    //   script.textContent = code;
+    //   document.documentElement.append(script);
+    //   // script.remove();
+    // }, clientCode.replaceAll('%WEBSITE%', site.url));
+
     // https://playwright.dev/docs/next/network/#modify-responses
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     await page.route(() => true, routeHandler(page, config, opts));
-
-    await page.addInitScript(clientCode.replace('%WEBSITE%', site.url));
 
     try {
       await page.goto(String(resolved), {
