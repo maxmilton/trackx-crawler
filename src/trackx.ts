@@ -18,6 +18,7 @@ trackx.setup('%API_ENDPOINT%', (payload, reason) => {
     payload.meta.details = Object.keys(details).length > 0 ? details : '';
   }
 
+  payload.meta.title ||= document.title;
   payload.meta.ctor ??= (() => {
     try {
       // @ts-expect-error - access in try/catch for safety
@@ -31,12 +32,11 @@ trackx.setup('%API_ENDPOINT%', (payload, reason) => {
   return payload;
 });
 
-trackx.ping();
-
 trackx.meta.agent = 'trackx-crawler';
 trackx.meta.release = process.env.APP_RELEASE;
 trackx.meta.website = '%WEBSITE%';
-trackx.meta.title = document.title;
+trackx.meta.url = '%URL%';
+trackx.meta.title = '';
 trackx.meta.referrer = document.referrer;
 const ancestors = globalThis.location.ancestorOrigins;
 trackx.meta.ancestors = (ancestors?.length && [...ancestors]) || '';
@@ -52,3 +52,11 @@ trackx.meta.embedded = (() => {
 if (process.env.NODE_ENV !== 'production') {
   trackx.meta.NODE_ENV = process.env.NODE_ENV || 'NULL';
 }
+
+trackx.ping();
+
+// At the time this script is run the document is empty, so wait for content to
+// be populated before trying to access it
+setTimeout(() => {
+  trackx.meta.title = document.title;
+});
