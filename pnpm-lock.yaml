@@ -17,7 +17,7 @@ specifiers:
   eslint-plugin-unicorn: 41.0.0
   git-ref: 0.3.1
   kleur: 4.1.4
-  playwright: 1.19.1
+  playwright: 1.19.2
   prettier: 2.5.1
   prettier-plugin-pkg: 0.11.1
   prettier-plugin-sh: 0.8.1
@@ -32,7 +32,7 @@ specifiers:
 dependencies:
   better-sqlite3: 7.5.0
   kleur: 4.1.4
-  playwright: 1.19.1
+  playwright: 1.19.2
   sade: 1.8.1
   trackx: 0.4.0
 
@@ -2091,8 +2091,8 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /playwright-core/1.19.1:
-    resolution: {integrity: sha512-+ByjhWX39PlINVRXr4ef9Kle85mk5QzA2WLioCoMQc3bSUtZpLV1mbeUDtRp/bvFw6YDIEyptj4QvzzRTXN3vg==}
+  /playwright-core/1.19.2:
+    resolution: {integrity: sha512-OsL3sJZIo1UxKNWSP7zW7sk3FyUGG06YRHxHeBw51eIOxTCQRx5t+hXd0cvXashN2CHnd3hIZTs2aKa/im4hZQ==}
     engines: {node: '>=12'}
     hasBin: true
     dependencies:
@@ -2118,13 +2118,13 @@ packages:
       - utf-8-validate
     dev: false
 
-  /playwright/1.19.1:
-    resolution: {integrity: sha512-h1iCJ1S2eAkZ67lZCmOxhRiT3OKa1JFGtyHLaZV30znqIjcsJLuyB/dmo78V3ajpMdz8iwxIb2xjpaSh1G+8UA==}
+  /playwright/1.19.2:
+    resolution: {integrity: sha512-2JmGWr/Iw/Uu27bZULeHgjn8doNrRVxIYdhspMuMlfKNpzwAe/sfm7wH8uey6jiZxnPL4bC5V4ACQcF4dAGWnw==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      playwright-core: 1.19.1
+      playwright-core: 1.19.2
     transitivePeerDependencies:
       - bufferutil
       - supports-color
