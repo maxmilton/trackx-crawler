@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@types/better-sqlite3': 7.4.2
+  '@types/better-sqlite3': 7.5.0
   '@types/chrome': 0.0.179
   '@types/node': 17.0.13
   '@typescript-eslint/eslint-plugin': 5.13.0
@@ -37,7 +37,7 @@ dependencies:
   trackx: 0.4.0
 
 devDependencies:
-  '@types/better-sqlite3': 7.4.2
+  '@types/better-sqlite3': 7.5.0
   '@types/chrome': 0.0.179
   '@types/node': 17.0.13
   '@typescript-eslint/eslint-plugin': 5.13.0_33fffc354ccfa91fbe7d1677b9395a0a
@@ -165,8 +165,8 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@types/better-sqlite3/7.4.2:
-    resolution: {integrity: sha512-HUXWMOmRgOrXJ0SKt6kxqUaZtGkr0HCuaEt/76LojT6bkTu0lb0uhr3K1su9T09mskDKyQwNMvT7WithFN10PQ==}
+  /@types/better-sqlite3/7.5.0:
+    resolution: {integrity: sha512-G9ZbMjydW2yj1AgiPlUtdgF3a1qNpLJLudc9ynJCeJByS3XFWpmT9LT+VSHrKHFbxb31CvtYwetLTOvG9zdxdg==}
     dependencies:
       '@types/node': 17.0.13
     dev: true
