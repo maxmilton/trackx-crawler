@@ -9,7 +9,7 @@ specifiers:
   better-sqlite3: 7.5.0
   c8: 7.11.0
   esbuild: 0.14.25
-  esbuild-minify-templates: 0.7.3
+  esbuild-minify-templates: 0.8.0
   eslint: 8.10.0
   eslint-config-airbnb-base: 15.0.0
   eslint-config-airbnb-typescript: 16.1.0
@@ -44,7 +44,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.13.0_eslint@8.10.0+typescript@4.6.2
   c8: 7.11.0
   esbuild: 0.14.25
-  esbuild-minify-templates: 0.7.3_esbuild@0.14.25
+  esbuild-minify-templates: 0.8.0_esbuild@0.14.25
   eslint: 8.10.0
   eslint-config-airbnb-base: 15.0.0_8b406960a2a06af75ddac353adbd0cfd
   eslint-config-airbnb-typescript: 16.1.0_5813502aeaebe415d30f406ae0c00e3b
@@ -923,8 +923,8 @@ packages:
     dev: true
     optional: true
 
-  /esbuild-minify-templates/0.7.3_esbuild@0.14.25:
-    resolution: {integrity: sha512-HSiVgS0iwfXs5r3sWtegnHom8AI7FPCDbZcxDH9RRBJsgFb2/SGFQU7SqpMiQgYE3C9hQs+xuPHTDb0pIOZe1g==}
+  /esbuild-minify-templates/0.8.0_esbuild@0.14.25:
+    resolution: {integrity: sha512-QP0myitL1Xd9BXhSVUprYBEE3WcYBhTE+aL87l+okR8L3/M3Wx9nzuL+VSJmWEO/hWdkoeqmLddfcK0u5UJubw==}
     engines: {node: '>= 12'}
     peerDependencies:
       esbuild: ^0.14.0
@@ -932,7 +932,7 @@ packages:
       '@ampproject/remapping': 2.1.2
       astray: 1.1.1
       esbuild: 0.14.25
-      magic-string: 0.25.9
+      magic-string: 0.26.1
       meriyah: 4.2.0
     dev: true
 
@@ -1816,8 +1816,9 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /magic-string/0.25.9:
-    resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
+  /magic-string/0.26.1:
+    resolution: {integrity: sha512-ndThHmvgtieXe8J/VGPjG+Apu7v7ItcD5mhEIvOscWjPF/ccOiLxHaSuCAS2G+3x4GKsAbT8u7zdyamupui8Tg==}
+    engines: {node: '>=12'}
     dependencies:
       sourcemap-codec: 1.4.8
     dev: true
