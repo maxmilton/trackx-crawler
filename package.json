@@ -26,7 +26,7 @@
     "kleur": "4.1.4",
     "playwright": "1.21.1",
     "sade": "1.8.1",
-    "trackx": "0.4.0"
+    "trackx": "0.5.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "7.5.0",
