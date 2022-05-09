@@ -20,7 +20,7 @@ specifiers:
   playwright: 1.21.1
   prettier: 2.6.2
   prettier-plugin-pkg: 0.13.0
-  prettier-plugin-sh: 0.10.1
+  prettier-plugin-sh: 0.10.2
   prettier-plugin-sql: 0.6.0
   sade: 1.8.1
   source-map-support: 0.5.21
@@ -53,7 +53,7 @@ devDependencies:
   git-ref: 0.3.1
   prettier: 2.6.2
   prettier-plugin-pkg: 0.13.0_prettier@2.6.2
-  prettier-plugin-sh: 0.10.1_prettier@2.6.2
+  prettier-plugin-sh: 0.10.2_prettier@2.6.2
   prettier-plugin-sql: 0.6.0_prettier@2.6.2
   source-map-support: 0.5.21
   tsm: 2.2.1
@@ -2338,8 +2338,8 @@ packages:
       prettier: 2.6.2
     dev: true
 
-  /prettier-plugin-sh/0.10.1_prettier@2.6.2:
-    resolution: {integrity: sha512-bEcEMvgivqNB/9r9UIN6CTPoux7pmZKFtzDkEb/hSwj/j/PlHfNpiOwLtDZ44D8RtUAZloMz7j1ucqdPqcTawQ==}
+  /prettier-plugin-sh/0.10.2_prettier@2.6.2:
+    resolution: {integrity: sha512-4HnLebvyiZ8Ilj5cEu5D8rCxrHqCE/1c+6GhZ0rARxFfqHhxcLBcG6Lx48wAD00IPYj2YPDtfnSlS9owWtLhvA==}
     engines: {node: '>=12.20'}
     peerDependencies:
       prettier: ^2.0.0
