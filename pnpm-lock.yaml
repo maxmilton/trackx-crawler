@@ -21,7 +21,7 @@ specifiers:
   prettier: 2.6.2
   prettier-plugin-pkg: 0.13.1
   prettier-plugin-sh: 0.10.2
-  prettier-plugin-sql: 0.6.0
+  prettier-plugin-sql: 0.6.1
   sade: 1.8.1
   source-map-support: 0.5.21
   trackx: 0.5.0
@@ -54,7 +54,7 @@ devDependencies:
   prettier: 2.6.2
   prettier-plugin-pkg: 0.13.1_prettier@2.6.2
   prettier-plugin-sh: 0.10.2_prettier@2.6.2
-  prettier-plugin-sql: 0.6.0_prettier@2.6.2
+  prettier-plugin-sql: 0.6.1_prettier@2.6.2
   source-map-support: 0.5.21
   tsm: 2.2.1
   typescript: 4.6.4
@@ -2349,8 +2349,8 @@ packages:
       synckit: 0.7.0
     dev: true
 
-  /prettier-plugin-sql/0.6.0_prettier@2.6.2:
-    resolution: {integrity: sha512-7SHz9Ll+6Hj9vvuvV+NAoYRU1iWjil2+6HE7IqTfyMd85ZRCt/vNO86C5eIpD1aLEE8lkIvtbPponhzkkXCLzw==}
+  /prettier-plugin-sql/0.6.1_prettier@2.6.2:
+    resolution: {integrity: sha512-KxQp08QCE2GXZoC1FuHbhxozwQ38I7aizQgXO5i5FfFpW9XWgNArPqOG7jG2UCEYVXSh97XitwuJxE3c69lLgQ==}
     engines: {node: '>=12.20'}
     peerDependencies:
       prettier: ^2.0.0
